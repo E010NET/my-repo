@@ -1,0 +1,29 @@
+# Homework_1
+
+##a. First, we need to load the data set into R using the command read.csv(). Use the help functionto learn what arguments this function takes. Once you have the necessary input, load the dataset into R and make it a data frame called iowa.df.
+
+```{r}
+iow.df = read.csv( "C:\\Users\\86176\\Documents\\github\\my-repo\\data\\iowa.csv",sep = ";")
+iow.df
+```
+##b. How many rows and columns does iowa.df have?
+```{r}
+dim(iow.df)
+```
+
+### 33行，10列
+
+##c. What are the names of the columns of iowa.df?
+### 列名分别为Year.Rain0.Temp1.Rain1.Temp2.Rain2.Temp3.Rain3.Temp4.Yield
+
+##d.What is the value of row 5, column 7 of iowa.df?
+```{r}
+iow.df[5, 7]
+```
+### 数值为79.7
+
+##e. Display the second row of iowa.df in its entirety
+```{r}
+iow.df[2,]
+```
+
