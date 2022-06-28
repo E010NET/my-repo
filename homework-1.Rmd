@@ -1,3 +1,9 @@
+---
+title: "homework-1"
+author: "Lizhiyuan"
+date: '2022-06-28'
+output: pdf_document
+---
 # Homework_1
 
 ##a. First, we need to load the data set into R using the command read.csv(). Use the help functionto learn what arguments this function takes. Once you have the necessary input, load the dataset into R and make it a data frame called iowa.df.
@@ -26,4 +32,5 @@ iow.df[5, 7]
 ```{r}
 iow.df[2,]
 ```
+
 
