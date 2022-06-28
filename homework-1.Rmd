@@ -2,35 +2,168 @@
 title: "homework-1"
 author: "Lizhiyuan"
 date: '2022-06-28'
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
-# Homework_1
+# 1. The Iowa data set iowa.csv is a toy example that summarises the yield of wheat (bushels per acre) forthe state of Iowa between 1930-1962. In addition to yield, year, rainfall and temperature were recordedas the main predictors of yield.
 
-##a. First, we need to load the data set into R using the command read.csv(). Use the help functionto learn what arguments this function takes. Once you have the necessary input, load the dataset into R and make it a data frame called iowa.df.
+## a. First, we need to load the data set into R using the command read.csv(). Use the help functionto learn what arguments this function takes. Once you have the necessary input, load the dataset into R and make it a data frame called iowa.df.
 
 ```{r}
+library(ggplot2)
 iow.df = read.csv( "C:\\Users\\86176\\Documents\\github\\my-repo\\data\\iowa.csv",sep = ";")
 iow.df
 ```
-##b. How many rows and columns does iowa.df have?
+
+## b. How many rows and columns does iowa.df have?
+
 ```{r}
 dim(iow.df)
 ```
 
 ### 33行，10列
 
-##c. What are the names of the columns of iowa.df?
+## c. What are the names of the columns of iowa.df?
+
 ### 列名分别为Year.Rain0.Temp1.Rain1.Temp2.Rain2.Temp3.Rain3.Temp4.Yield
 
-##d.What is the value of row 5, column 7 of iowa.df?
+## d.What is the value of row 5, column 7 of iowa.df?
+
 ```{r}
 iow.df[5, 7]
 ```
+
 ### 数值为79.7
 
-##e. Display the second row of iowa.df in its entirety
+## e. Display the second row of iowa.df in its entirety
+
 ```{r}
 iow.df[2,]
 ```
 
+# 2. Syntax and class-typing
+
+## a. For each of the following commands, either explain why they should be errors, or explain thenon-erroneous result
+
+```{r}
+vector1 <- c("5", "12", "7", "32")
+max(vector1)
+sort(vector1)
+#sum(vector1)
+
+```
+### 由于向量内的值均为字符串，以每个字符串第一个值来判断大小排序，故vector1中最大值为7，排序默认从小到大故结果为此，而sum报错的原因是无法对字符串数据类型求和。
+
+## b. For the next series of commands, either explain their results, or why they should produce errors.
+
+```{r}
+vector2 <- c("5",7,12)
+#vector2[2] + vector2[3]
+dataframe3 <- data.frame(z1="5",z2=7,z3=12)
+dataframe3[1,2] + dataframe3[1,3]
+list4 <- list(z1="6", z2=42, z3="49", z4=126)
+list4[[2]]+list4[[4]]
+#list[2]+list4[4]
+```
+### 出现错误的的代码被注释掉，第一个错误出现的原因是，vector数据储存统一数据类型，即内部数据全部为字符串，第二个错误出现的原因为list[2]为42对应的键值。
+
+# 3. Working with functions and operators
+
+## a. The colon operator will create a sequence of integers in order. It is a special case of the functionseq() which you saw earlier in this assignment. Using the help command ?seq to learn aboutthe function, design an expression that will give you the sequence of numbers from 1 to 10000in increments of 372. Design another that will give you a sequence between 1 and 10000 that isexactly 50 numbers in length.
+
+```{r}
+seq(from = 1, to = 10000, by = 372)
+seq(from = 1, to = 10000, length.out = 50)
+```
+
+##b. The function rep() repeats a vector some number of times. Explain the difference betweenrep(1:3, times=3) and rep(1:3, each=3).
+
+```{r}
+rep(1:3, times=3)
+rep(1:3, each=3)
+```
+### times参数指向量循环几次，each指每个值重复几次
+
+# MB.Ch1.2. The orings data frame gives data on the damage that had occurred in US space shuttle launchesprior to the disastrous Challenger launch of 28 January 1986. The observations in rows 1, 2, 4, 11, 13, and 18were included in the pre-launch charts used in deciding whether to proceed with the launch, while remainingrows were omitted.Create a new data frame by extracting these rows from orings, and plot total incidents against temperaturefor this new data frame. Obtain a similar plot for the full data set.
+
+```{r}
+oring <-DAAG::orings
+oring_new <- oring[c(1,2,4,11,13,18),]
+oring_new
+oring
+ggplot(data = oring_new) +
+  geom_point(aes(x = Temperature, y = Total))
+ggplot(data = oring) +
+  geom_point(aes(x = Temperature, y = Total))
+```
+
+# MB.Ch1.4. For the data frame ais (DAAG package)
+
+## (a) Use the function str() to get information on each of the columns. Determine whether any of thecolumns hold missing values
+
+```{r}
+ais.df <- DAAG::ais
+str(ais.df)
+any(is.na(ais.df[,1]))
+any(is.na(ais.df[,2]))
+any(is.na(ais.df[,3]))
+any(is.na(ais.df[,4]))
+any(is.na(ais.df[,5]))
+any(is.na(ais.df[,6]))
+any(is.na(ais.df[,7]))
+any(is.na(ais.df[,8]))
+any(is.na(ais.df[,9]))
+any(is.na(ais.df[,10]))
+any(is.na(ais.df[,11]))
+any(is.na(ais.df[,12]))
+any(is.na(ais.df[,13]))
+
+
+```
+
+## (b) Make a table that shows the numbers of males and females for each different sport. In which sports isthere a large imbalance (e.g., by a factor of more than 2:1) in the numbers of the two sexes?
+
+```{r}
+female_sports_table <- table(ais.df[ais.df[,12] == 'f',13])
+male_sports_table <- table(ais.df[ais.df[,12]=='m',13])
+female_sports_table
+male_sports_table
+female_sports_table/male_sports_table
+```
+
+## 可以看到女生/男生，数值差较大的有Gym，Netball，T_Sprnt，W——Polo
+
+# MB.Ch1.6.Create a data frame called Manitoba.lakes that contains the lake’s elevation (in meters above sealevel) and area (in square kilometers) as listed below. Assign the names of the lakes using the row.names()function
+
+```{r}
+Manitoba.lakes.matrix <- matrix(c(217,254,248,254,253,227,178,207,217,24387,5374,4624,2247,1353,1223,1151,755,657),ncol = 2)
+colnames(Manitoba.lakes.matrix) <- c("elevation", "area")
+rownames(Manitoba.lakes.matrix) <- c("Winnipeg", "Winnipegosis", "Manitoba", "SouthernIndian", "Cedar", "Island", "Gods", "Cross","Playgreen")
+Manitoba.lakes <- data.frame(Manitoba.lakes.matrix)
+Manitoba.lakes
+```
+
+## (a) Use the following code to plot log2(area) versus elevation, adding labeling information (there is anextreme value of area that makes a logarithmic scale pretty much essential):
+
+```{r}
+attach(Manitoba.lakes)
+plot(log2(area) ~ elevation, pch=16, xlim=c(170,280))
+# NB: Doubling the area increases log2(area) by 1.0
+text(log2(area) ~ elevation, labels=row.names(Manitoba.lakes), pos=4)
+text(log2(area) ~ elevation, labels=area, pos=2)
+title("Manitoba's Largest Lakes")
+
+```
+
+## (b) Repeat the plot and associated labeling, now plotting area versus elevation, but specifying ylog=TRUEin order to obtain a logarithmic y-scale
+
+```{r}
+
+plot(area ~ elevation, pch=16, xlim=c(170,280), ylog=T)
+text(area ~ elevation, labels=row.names(Manitoba.lakes), pos=4, ylog=T)
+text(area ~ elevation, labels=area, pos=2, ylog=T)
+title("Manitoba's Largest Lakes")
+
+```
 
